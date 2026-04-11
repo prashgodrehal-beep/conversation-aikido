@@ -509,10 +509,10 @@ interface DojoScreenProps {
   onSend: () => void;
   onRetry: () => void;
   onAnother: () => void;
-  validateRef: React.RefObject<HTMLInputElement | null>;
-  mirrorRef: React.RefObject<HTMLInputElement | null>;
-  inquireRef: React.RefObject<HTMLInputElement | null>;
-  conversationEndRef: React.RefObject<HTMLDivElement | null>;
+  validateRef: React.RefObject<HTMLInputElement>;
+  mirrorRef: React.RefObject<HTMLInputElement>;
+  inquireRef: React.RefObject<HTMLInputElement>;
+  conversationEndRef: React.RefObject<HTMLDivElement>;
   totalScore: number;
 }
 
@@ -782,7 +782,7 @@ function FieldRow({
   placeholder: string;
   value: string;
   onChange: (v: string) => void;
-  inputRef: React.RefObject<HTMLInputElement | null>;
+  inputRef: React.RefObject<HTMLInputElement>;
   onEnter: () => void;
 }) {
   return (
