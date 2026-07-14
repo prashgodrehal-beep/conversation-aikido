@@ -1,85 +1,166 @@
 import { Scenario } from "./types";
 
-/**
- * The scenario library.
- *
- * To add a new scenario: add an object to this array.
- * To edit difficulty / persona / wording: edit in place.
- * To remove: delete the object.
- *
- * No other code needs to change.
- */
+export const MAX_ATTEMPTS = 3;
+
 export const SCENARIOS: Scenario[] = [
   {
-    id: "price-pushback",
-    category: "Sales",
+    id: "toxic-high-performer",
+    category: "Workplace Leadership",
+    difficulty: "Hard",
+    title: "The Toxic High Performer",
+    goal: "Address the disrespectful behavior clearly while staying calm, professional, and firm — without making it personal or caving because their results are excellent.",
+    passThreshold: 7,
+    situation: "Your star project manager frequently rolls their eyes and sighs loudly when you provide direction during team meetings, making it clear they think your input is unnecessary. Two other team members have privately told you it makes them uncomfortable speaking up. You've pulled them into a one-on-one.",
+    counterpart: "Priya, your star PM who uses her track record as a shield against any feedback.",
+    opening: "Look, I deliver. Every single quarter. If people have a problem with my style, maybe the issue isn't me.",
+    modelResponse: "I hear you, Priya, and I want to be clear — your results are excellent and that's not in question. What I'm addressing is a specific pattern: the visible frustration during team meetings is making it harder for others to contribute. What would a team meeting look like where both your expertise and their input could coexist?",
+  },
+  {
+    id: "leading-former-peers",
+    category: "Workplace Leadership",
+    difficulty: "Medium",
+    title: "Leading Former Peers",
+    goal: "Set new expectations with a former teammate warmly but firmly — without getting cold, pulling rank, or caving to the friendship.",
+    passThreshold: 7,
+    situation: "You were promoted to team lead three weeks ago. Your closest work friend just walked into your office, closed the door, and asked you to fast-track their raise using your new influence.",
+    counterpart: "Arjun, your former peer and close friend who sees your promotion as his shortcut to a raise.",
+    opening: "Look, we go way back. You know I've been waiting for that senior role. Now that you've got influence, just put in a good word to fast-track my raise. Between us.",
+    modelResponse: "I value our friendship, Arjun, and I understand why you'd bring this to me. I also want to be honest — using my position to fast-track a raise wouldn't be fair to you or the team. What I can do is help you think about how to make the strongest case through the proper channel. What do you think your strongest argument would be?",
+  },
+  {
+    id: "silent-resignation",
+    category: "Workplace Leadership",
+    difficulty: "Hard",
+    title: "The Silent Resignation",
+    goal: "Uncover the real reason your best performer is leaving — without getting defensive, making promises you can't keep, or turning it into a guilt trip.",
+    passThreshold: 7,
+    situation: "Your highest-performing engineer just handed in her resignation. She says it's just time for something new. You know she was passed over for a project lead role last quarter.",
+    counterpart: "Sneha, your top engineer who has rehearsed a polite exit speech to avoid confrontation.",
+    opening: "I appreciate everything, honestly. I've learned a lot here. It's just... time. No hard feelings.",
+    modelResponse: "I appreciate you saying that, Sneha, and I respect your decision. Before we move to logistics, I want to ask you something directly — I noticed you were considered for the project lead role last quarter and it went a different way. I'd understand if that factored in. What was going through your mind when that happened?",
+  },
+  {
+    id: "hard-performance-review",
+    category: "Workplace Leadership",
+    difficulty: "Medium",
+    title: "The Hard Performance Review",
+    goal: "Be honest about consistent underperformance without destroying their confidence or letting empathy turn into avoidance of the hard truth.",
+    passThreshold: 7,
+    situation: "Your direct report thinks they're doing well. They're not — three missed deadlines this quarter and their work requires significant rework. You're in the mid-year review.",
+    counterpart: "Vikram, an earnest junior analyst completely unaware of the gap between his perception and reality.",
+    opening: "Sure, I'm always looking to grow. But honestly, I feel like this has been my strongest quarter yet.",
+    modelResponse: "I appreciate that energy, Vikram. I want to be straightforward with you because I think you deserve honesty — there's a gap between where you think the work is and where it needs to be. Three deliverables needed significant rework this quarter. I don't say that to discourage you — I say it because I think you can close that gap. What's been getting in the way for you?",
+  },
+  {
+    id: "saying-no-to-ceo",
+    category: "Workplace Leadership",
+    difficulty: "Hard",
+    title: "Saying No to Your CEO",
+    goal: "Push back on an unrealistic request without being seen as not a team player — while clearly communicating the trade-off.",
+    passThreshold: 7,
+    situation: "Your CEO just dropped by, excited about a major client wanting a custom integration by end of month. Your team is mid-sprint on a critical infrastructure migration that's already behind.",
+    counterpart: "Raghav, your CEO who loves big client wins and genuinely doesn't see the operational trade-off.",
+    opening: "I just got off a call with a major client. They want a custom integration by end of month. I told them we'd make it happen. This is huge. I need your team on it starting Monday.",
+    modelResponse: "I can see why you're excited — that's a big win. I want to make it happen too. Here's what I need you to see: taking this on by Monday means pulling the team off the infrastructure migration, which is already a week behind. Can we look at this together — what if we committed to the client for mid-next-month and I scope a fast-track plan by Friday?",
+  },
+  {
+    id: "credit-thief",
+    category: "Workplace Leadership",
+    difficulty: "Medium",
+    title: "The Credit Thief",
+    goal: "Reclaim credit for your work without looking petty or making accusations — while ensuring it doesn't happen again.",
+    passThreshold: 7,
+    situation: "In last week's leadership meeting, your peer presented the competitive analysis you spent three weeks building as something their team put together. Your VP complimented them. You were sitting right there.",
+    counterpart: "Deepak, a charming peer who genuinely believes his framing was fine and will deflect if challenged vaguely.",
+    opening: "Oh, I didn't mean it like that. I said 'my team' — I consider you part of the extended team. I think you're reading into it.",
+    modelResponse: "I appreciate that, Deepak. I don't think you meant harm. I do want to be specific though — the competitive analysis was my work product, built over three weeks. When it was presented as your team's output, it didn't land well for me. Going forward, can we agree to credit the originating team when presenting each other's work?",
+  },
+  {
+    id: "b2b-onboarding",
+    category: "Client-Facing",
     difficulty: "Easy",
-    title: "The Price Objection",
-    persona: "Ravi, a procurement head at a mid-size manufacturer",
-    opening:
-      "Look, I'll be straight with you. Your quote came in 30% higher than the other two vendors. I genuinely don't see how we can justify this to our CFO.",
-    context:
-      "Ravi is under pressure from finance. He likes you but needs ammunition to defend the choice internally.",
+    title: "The B2B Onboarding Call",
+    goal: "Guide a new corporate client through onboarding clearly and warmly — without sounding like a compliance checklist or rushing through requirements they find tedious.",
+    passThreshold: 7,
+    situation: "You need to explain complex KYC and document requirements to a client who is eager to start trading internationally and finds the paperwork tedious.",
+    counterpart: "Sameer, an impatient import-export founder who thinks he already knows the process from his last bank.",
+    opening: "Can we skip ahead? I've done this before at my last bank. Just send me the forms and I'll fill them out. I want to talk about when we can actually start transacting.",
+    modelResponse: "I completely understand, Sameer — you've been through this before and you're ready to move. The reason I want to walk through this together is that the requirements have changed since last year, and I've seen clients hit 3-week delays when forms come back incomplete. If we spend 10 minutes now, I can get you transacting faster. Which section should we start with?",
   },
   {
-    id: "no-experience",
-    category: "Sales",
-    difficulty: "Medium",
-    title: "No Industry Experience",
-    persona: "Meera, a VP at a pharmaceutical company",
-    opening:
-      "I've reviewed your case studies. None of them are in pharma. We deal with regulatory complexity that frankly, I don't think you understand. Why are we even having this conversation?",
-    context:
-      "Meera is skeptical, slightly dismissive, and short on time. She's testing whether you'll get defensive or stay grounded.",
-  },
-  {
-    id: "bad-history",
-    category: "Sales",
+    id: "angry-escalation",
+    category: "Client-Facing",
     difficulty: "Hard",
-    title: "The Burnt Bridge",
-    persona: "Karthik, a CTO who used your company 3 years ago",
-    opening:
-      "I'll be honest — the last time we worked with your firm, the implementation was a disaster. We lost two months and our team still talks about it. So I'm taking this meeting out of courtesy. That's it.",
-    context:
-      "Karthik is genuinely hurt and a little angry. He's not interested in excuses or 'things have changed' platitudes.",
+    title: "The Angry Escalation",
+    goal: "De-escalate a furious client without apologizing for things that aren't your fault, making promises you can't keep, or dismissing their experience.",
+    passThreshold: 7,
+    situation: "A client's payment processing failed during month-end close. They've been bounced between two support reps and escalated to you.",
+    counterpart: "Lakshmi, a Finance Director whose reputation is on the line because she advocated for your platform internally.",
+    opening: "This is the third person I'm talking to. Nobody in your company seems to know what's going on. We've lost two days of processing because of YOUR system, and my CFO is asking me why we chose you.",
+    modelResponse: "Lakshmi, I understand how frustrating this is — two days of lost processing during month-end close is serious, and being passed between reps made it worse. I'm taking ownership from here. Before I troubleshoot, I want to understand the full impact. What's the most urgent thing your CFO needs resolved first?",
   },
   {
-    id: "team-pushback",
-    category: "Leadership",
+    id: "scope-creep",
+    category: "Client-Facing",
     difficulty: "Medium",
-    title: "The Frustrated Direct Report",
-    persona: "Anjali, your senior engineer",
-    opening:
-      "I need to say something. The way leadership rolled out this new process — without consulting us — felt completely tone-deaf. The team is demoralized. And honestly? I'm thinking about whether I want to stay.",
-    context:
-      "Anjali is your best engineer. She's vulnerable right now. She doesn't want a pep talk — she wants to feel heard.",
+    title: "The Scope Creep Conversation",
+    goal: "Hold the project boundary firmly while making the client feel heard — without being rigid, dismissive, or accidentally agreeing to free work.",
+    passThreshold: 7,
+    situation: "You're three months into a consulting engagement. The client keeps adding small asks outside the original scope. You've absorbed two already.",
+    counterpart: "Nitin, a friendly VP Strategy who genuinely doesn't realize he's scope creeping.",
+    opening: "One more thing — can your team also put together a competitor benchmarking deck for our board meeting next week? It's related to the work you're already doing, so it shouldn't be a big lift.",
+    modelResponse: "I appreciate you thinking of us for that, Nitin — it tells me the work is landing well. The benchmarking deck is actually a separate workstream from what we scoped. I want to do it justice rather than rush it. How about I scope it as a focused sprint with a separate proposal, and we keep the current engagement on track?",
   },
   {
-    id: "board-skeptic",
-    category: "Leadership",
+    id: "passive-aggressive-colleague",
+    category: "Conflict",
+    difficulty: "Medium",
+    title: "The Passive-Aggressive Colleague",
+    goal: "Surface the real issue behind the passive aggression without escalating, matching their tone, or pretending everything is fine.",
+    passThreshold: 7,
+    situation: "A colleague has been CC'ing your manager on routine emails for two weeks and jokingly questioned your work in a team standup. You pull them aside.",
+    counterpart: "Kavita, a peer who is being passive-aggressive but will deny it if confronted directly.",
+    opening: "What? I CC Rahul on everything, it's not personal. And I was genuinely asking about the analysis — I didn't mean anything by it.",
+    modelResponse: "I hear you, Kavita, and I'm not assuming intent. What I noticed is a pattern shift — the CC'ing started two weeks ago, around the same time as the product decision. I wanted to check in directly: is there something about how that decision was handled that didn't sit right with you?",
+  },
+  {
+    id: "founder-disagreement",
+    category: "Conflict",
     difficulty: "Hard",
-    title: "The Board Member Attack",
-    persona: "Mr. Iyer, an independent board member",
-    opening:
-      "Your numbers this quarter are unacceptable. I've been on boards for 20 years and I've seen this pattern before — founders who can't admit when their strategy isn't working. What I'm hearing from you sounds like rationalization.",
-    context:
-      "Mr. Iyer is publicly challenging you in front of other directors. He may be right or wrong, but reacting defensively will end your credibility in the room.",
+    title: "The Founder Disagreement",
+    goal: "Disagree with your co-founder on a critical decision without damaging trust, pulling rank, or suppressing your actual view to keep the peace.",
+    passThreshold: 7,
+    situation: "You and your co-founder are split on taking a bridge round from an investor who wants a board seat. You think it's a bad deal. You're four months from running out of runway.",
+    counterpart: "Your co-founder, who is stressed and conflating disagreement with betrayal.",
+    opening: "We have four months of runway. Four. I don't have the luxury of being picky about terms right now. If you block this, and we go under, that's on you.",
+    modelResponse: "I hear the urgency, and I'm not dismissing it — four months is real. I'm not blocking this. I'm asking us to slow down by 48 hours and run the numbers on what a board seat actually costs us in the next round. If the math still works, I'm in. What would you need to see to feel confident either way?",
   },
   {
     id: "partner-unheard",
     category: "Relationships",
     difficulty: "Easy",
-    title: '"You Never Listen"',
-    persona: "Your partner, after a long day",
-    opening:
-      "You know what? Forget it. Every time I try to talk to you about this, you either jump to fixing it or you check your phone. I don't even know why I bother anymore.",
-    context:
-      "They're not asking for a solution. They're asking to feel seen. The reflex to defend or fix will make this worse.",
+    title: "\"You Never Listen\"",
+    goal: "Make your partner feel heard and safe — without defending yourself, fixing the problem, or dismissing their frustration.",
+    passThreshold: 7,
+    situation: "Your partner has had a long day. You got home a few minutes late. They're not asking for a solution — they're asking to feel seen.",
+    counterpart: "Your partner, who is exhausted and testing whether you'll actually listen this time.",
+    opening: "You know what? Forget it. Every time I try to talk to you about this, you either jump to fixing it or you check your phone. I don't even know why I bother anymore.",
+    modelResponse: "You're right — I hear that, and I'm not going to jump to fixing anything. It sounds like you've been trying to tell me something for a while and it hasn't landed. I'm here now. What happened today?",
+  },
+  {
+    id: "deadline-extension",
+    category: "Client-Facing",
+    difficulty: "Easy",
+    title: "The Deadline Extension",
+    goal: "Secure more time without looking disorganized or playing the victim — propose a clear solution.",
+    passThreshold: 7,
+    situation: "A critical component for the product launch from your third-party manufacturer has been delayed due to unforeseen shipping issues. You need to ask your stakeholder for an extension.",
+    counterpart: "Your project stakeholder, who is counting on the original launch date and doesn't like surprises.",
+    opening: "I've already told the board we're launching on the 15th. Please tell me we're still on track.",
+    modelResponse: "I understand the 15th is committed and I want to be transparent before it becomes a surprise. Our third-party component has a confirmed shipping delay. Here's what I've already done: I've secured expedited shipping that gets us to the 22nd with high confidence, and I've identified workstreams we can pull forward so we lose zero productive days. Can I walk you through the adjusted plan?",
   },
 ];
 
 export function getScenario(id: string): Scenario | undefined {
   return SCENARIOS.find((s) => s.id === id);
 }
-
-export const MAX_TURNS = 4;

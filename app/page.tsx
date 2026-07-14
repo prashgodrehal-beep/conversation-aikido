@@ -1,5 +1,2 @@
 import DojoApp from "@/components/DojoApp";
-
-export default function Page() {
-  return <DojoApp />;
-}
+export default function Page() { return <DojoApp />; }

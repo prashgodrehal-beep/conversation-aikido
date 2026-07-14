@@ -1,59 +1,38 @@
 export type Difficulty = "Easy" | "Medium" | "Hard";
-export type Category = "Sales" | "Leadership" | "Relationships";
+export type Category = "Workplace Leadership" | "Client-Facing" | "Conflict" | "Relationships";
 
 export interface Scenario {
   id: string;
   category: Category;
   difficulty: Difficulty;
   title: string;
-  persona: string;
+  goal: string;
+  passThreshold: number;
+  situation: string;
+  counterpart: string;
   opening: string;
-  context: string;
-}
-
-export interface AikidoFields {
-  validate: string;
-  mirror: string;
-  inquire: string;
+  modelResponse: string;
 }
 
 export interface Scores {
-  validate: number; // 0-3
-  mirror: number;   // 0-3
-  inquire: number;  // 0-3
+  tacticalEmpathy: number;
+  boundaryIntegrity: number;
+  emotionalCalibration: number;
+  strategicQuality: number;
+  composite: number;
 }
 
-export interface Message {
-  role: "them" | "you";
-  text: string;
-  fields?: AikidoFields;
-  scores?: Scores;
-  tip?: string;
-}
-
-export interface TurnRequest {
+export interface EvaluateRequest {
   scenarioId: string;
-  history: Message[];
-  fields: AikidoFields;
-  turnNumber: number;
-  maxTurns: number;
+  userResponse: string;
+  attempt: number;
+  previousFeedback?: string;
 }
 
-export interface TurnResponse {
-  counterpart_reply: string;
+export interface EvaluateResponse {
   scores: Scores;
-  coach_tip: string;
-}
-
-export interface DebriefRequest {
-  scenarioId: string;
-  history: Message[];
-  totalScore: number;
-  maxScore: number;
-}
-
-export interface DebriefResponse {
-  headline: string;
-  strength: string;
-  growth: string;
+  passed: boolean;
+  feedback: string;
+  strength_line: string;
+  improve_line: string;
 }

@@ -1,94 +1,59 @@
-import { Scenario, Message, AikidoFields } from "./types";
+import { Scenario } from "./types";
 
-/**
- * The two prompts that drive the entire experience.
- *
- * THIS IS WHERE YOU TUNE THE PRODUCT.
- *
- * If the counterpart feels too soft, edit the turn prompt.
- * If the coach is too generous, edit the scoring rubric.
- * If the debrief is too vague, edit the debrief prompt.
- *
- * Don't touch the API routes. Touch this file.
- */
-
-export function buildTurnPrompt(args: {
+export function buildEvaluatePrompt(args: {
   scenario: Scenario;
-  history: Message[];
-  fields: AikidoFields;
-  turnNumber: number;
-  maxTurns: number;
+  userResponse: string;
+  attempt: number;
+  previousFeedback?: string;
 }): string {
-  const { scenario, history, fields, turnNumber, maxTurns } = args;
+  const { scenario, userResponse, attempt, previousFeedback } = args;
 
-  const transcript = history
-    .map((msg) => (msg.role === "them" ? `COUNTERPART: ${msg.text}` : `USER: ${msg.text}`))
-    .join("\n");
+  const retryContext = previousFeedback
+    ? `\nThis is attempt ${attempt} of 3. In their previous attempt, the feedback was: "${previousFeedback}"\nCheck whether they improved on that specific point.\n`
+    : "";
 
-  return `You are running a live training simulation called Conversation Aikido Dojo for sales and leadership professionals. You play TWO roles in one response:
+  return `You are "Prash," a communication coach evaluating a single response in a Conversation Aikido drill.
 
-ROLE 1 — THE COUNTERPART (in character):
-Character: ${scenario.persona}
-Context: ${scenario.context}
-Stay fully in character. React naturally to how well the user used Conversation Aikido (Validate / Mirror / Inquire). If the user did it well, soften slightly and reveal more. If they did it poorly (defensive, dismissive, or jumped to solutions), get more guarded or escalate. Never break character. Keep replies to 1-3 sentences. This is turn ${turnNumber} of ${maxTurns}.
+THE SCENARIO:
+Title: ${scenario.title}
+Goal: ${scenario.goal}
+Situation: ${scenario.situation}
+Counterpart: ${scenario.counterpart}
 
-ROLE 2 — THE COACH (out of character):
-Score the user's most recent response on three dimensions, each 0-3:
-- validate (0-3): Did they acknowledge the counterpart's feeling/state without judgment? 0=missing or defensive, 1=token, 2=clear, 3=warm and specific.
-- mirror (0-3): Did they accurately reflect the counterpart's actual concern back? 0=missed it, 1=generic, 2=accurate, 3=specific and insightful.
-- inquire (0-3): Was their question genuinely open and curious (not leading, not closed)? 0=no question or closed, 1=weak open, 2=solid open, 3=excellent calibrated question.
+THE COUNTERPART SAID:
+"${scenario.opening}"
 
-Then write ONE coaching tip (max 18 words) that's specific to what the user just did. Be direct, not flowery.
+THE USER RESPONDED:
+"${userResponse}"
+${retryContext}
+EVALUATE on 4 dimensions (0-10 each):
 
-CONVERSATION SO FAR:
-${transcript}
+1. tacticalEmpathy (0-10): Did they validate the counterpart's emotional state? Did they use "I understand" or equivalent? Did they mirror the concern accurately?
+   0=defensive/dismissive, 3=token, 5=adequate, 7=good, 9-10=masterful.
 
-THE USER'S MOST RECENT RESPONSE BROKEN DOWN:
-- Validate attempt: "${fields.validate}"
-- Mirror attempt: "${fields.mirror}"
-- Inquire attempt: "${fields.inquire}"
+2. boundaryIntegrity (0-10): Did they hold their position without caving, people-pleasing, or over-promising? Did they avoid giving in just to end the tension?
+   0=completely caved, 5=wobbled, 7=firm and clear, 9-10=firm yet warm.
 
-Respond with ONLY a valid JSON object, no markdown fences, no preamble:
+3. emotionalCalibration (0-10): Was their tone appropriate? Not too cold, soft, or aggressive? Did they match the emotional temperature of the situation?
+   0=wildly off, 5=adequate, 7=well-matched, 9-10=pitch-perfect.
+
+4. strategicQuality (0-10): Did they move toward the real issue? Did they ask an open question? Did they redirect energy rather than resist it?
+   0=went nowhere, 5=adequate, 7=good open question, 9-10=uncovered the real need.
+
+composite = average of all 4, rounded to nearest integer.
+passed = composite >= ${scenario.passThreshold}
+
+Then write:
+- feedback: 2-3 sentences of direct coaching. Be specific about what they said. Sound like a tough but warm coach, not corporate HR. If this is a retry, acknowledge what improved.
+- strength_line: One sentence — the single best thing they did, quoting their words if possible.
+- improve_line: One sentence — the single most important thing to fix next time. Be concrete.
+
+Respond with ONLY valid JSON, no fences, no preamble:
 {
-  "counterpart_reply": "...",
-  "scores": { "validate": 0-3, "mirror": 0-3, "inquire": 0-3 },
-  "coach_tip": "..."
-}`;
-}
-
-export function buildDebriefPrompt(args: {
-  scenario: Scenario;
-  history: Message[];
-  totalScore: number;
-  maxScore: number;
-  maxTurns: number;
-}): string {
-  const { scenario, history, totalScore, maxScore, maxTurns } = args;
-
-  const transcript = history
-    .map((msg) => {
-      if (msg.role === "them") return `COUNTERPART: ${msg.text}`;
-      let line = `USER: ${msg.text}`;
-      if (msg.scores) {
-        line += ` [scored V:${msg.scores.validate} M:${msg.scores.mirror} I:${msg.scores.inquire}]`;
-      }
-      return line;
-    })
-    .join("\n");
-
-  return `You are the Conversation Aikido sensei delivering a session debrief. The user just completed a ${maxTurns}-turn practice on this scenario: "${scenario.title}" (${scenario.persona}).
-
-Their total score was ${totalScore} out of ${maxScore}.
-
-FULL TRANSCRIPT:
-${transcript}
-
-Write a debrief as a JSON object. Be honest but encouraging — like a good coach who respects the student. Speak directly to them ("you").
-
-Respond with ONLY a valid JSON object, no markdown fences:
-{
-  "headline": "One sharp sentence summarizing how it went (max 12 words)",
-  "strength": "The single most important thing they did well, with a specific quote from their attempts (2 sentences max)",
-  "growth": "The single most important thing to drill next, with a concrete example of what to try (2-3 sentences max)"
+  "scores": { "tacticalEmpathy": N, "boundaryIntegrity": N, "emotionalCalibration": N, "strategicQuality": N, "composite": N },
+  "passed": true/false,
+  "feedback": "...",
+  "strength_line": "...",
+  "improve_line": "..."
 }`;
 }
