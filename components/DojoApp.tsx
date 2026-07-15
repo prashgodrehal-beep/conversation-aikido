@@ -534,4 +534,22 @@ function ResultScreen({ scenario, result, attempt, transcript, onRetry, onAnothe
         {!result.passed && scenario.modelResponse && (
           <div className="rounded-2xl p-6 mb-6 fade-in" style={{ background: "rgba(11,31,58,0.03)", border: "1px solid rgba(11,31,58,0.1)" }}>
             <div className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "var(--navy)" }}>What &quot;great&quot; sounds like</div>
-            <p className="text-sm italic leading-relaxed" style={{ color: "rgba(11,31,58,0.75)" }}>&quot;{scenario.modelResponse}&q
+            <p className="text-sm italic leading-relaxed" style={{ color: "rgba(11,31,58,0.75)" }}>&quot;{scenario.modelResponse}&quot;</p>
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-3 fade-in">
+          {canRetry && (
+            <button onClick={onRetry} className="flex-1 btn-amber px-6 py-4 rounded-full font-semibold text-sm">
+              Try again →
+            </button>
+          )}
+          <button onClick={onAnother} className={`flex-1 ${canRetry ? "btn-outline" : "btn-primary"} px-6 py-4 rounded-full font-semibold text-sm`}>
+            {result.passed ? "Next scenario →" : canRetry ? "Different scenario" : "Back to scenarios"}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
