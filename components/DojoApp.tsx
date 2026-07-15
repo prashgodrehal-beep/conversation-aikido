@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { SCENARIOS, MAX_ATTEMPTS, getScenario } from "@/lib/scenarios";
 import type { Scenario, Scores, EvaluateResponse } from "@/lib/types";
+import { initPostHog, trackEvent } from "@/lib/tracking";
+import { SocialProof } from "@/components/SocialProof";
 
 // Web Speech API types (not in standard TS lib)
 interface SpeechRecognitionEvent extends Event {
@@ -41,6 +43,9 @@ export default function DojoApp() {
       setMicState("unsupported");
     }
   }, []);
+  useEffect(() => {
+    initPostHog();
+  }, []);
 
   const go = (s: Screen) => { setScreen(s); window.scrollTo(0, 0); };
 
@@ -54,6 +59,7 @@ export default function DojoApp() {
     setInterimText("");
     setResult(null);
     go("drill");
+    trackEvent({ event: "drill_started", scenario_id: scenario?.id });
   };
 
   const retryDrill = () => {
@@ -64,6 +70,7 @@ export default function DojoApp() {
     setInterimText("");
     setResult(null);
     go("drill");
+    trackEvent({ event: "drill_retried", scenario_id: scenario?.id, attempt: attempt + 1 });
   };
 
   // ── VOICE ────────────────────────────────────────────────
@@ -141,6 +148,13 @@ export default function DojoApp() {
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `HTTP ${res.status}`);
       const data: EvaluateResponse = await res.json();
       setResult(data);
+      trackEvent({
+        event: "drill_completed",
+        scenario_id: scenario.id,
+        score: data.scores.composite,
+        passed: data.passed,
+        attempt,
+      });
       go("result");
     } catch (err) {
       console.error(err);
@@ -329,6 +343,9 @@ function MethodScreen({ onEnter }: { onEnter: () => void }) {
             </div>
           ))}
         </div>
+        <div className="mt-8">
+          <SocialProof />
+        </div>
         <div className="text-center mt-14">
           <button onClick={onEnter} className="btn-amber px-10 py-4 rounded-full font-bold text-sm tracking-wide">Practice it now →</button>
         </div>
@@ -364,6 +381,9 @@ function ScenarioScreen({ onBack, onPick, filter, setFilter }: {
             </button>
           ))}
         </div>
+        <div className="mb-8">
+          <SocialProof />
+        </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((s) => {
             const dots = s.difficulty === "Easy" ? 1 : s.difficulty === "Medium" ? 2 : 3;
@@ -371,7 +391,7 @@ function ScenarioScreen({ onBack, onPick, filter, setFilter }: {
               <button key={s.id} className="scenario-card fade-in" onClick={() => onPick(s.id)}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="pill" style={{ background: "rgba(11,31,58,0.06)", color: "var(--navy)" }}>{s.category}</span>
-                  <div className="flex gap-1">{[0,1,2].map((i) => <span key={i} className="difficulty-dot" style={{ background: i < dots ? (dots === 3 ? "var(--amber)" : "var(--teal)") : "#e7e0cc" }} />)}</div>
+                  <div className="flex gap-1">{[0, 1, 2].map((i) => <span key={i} className="difficulty-dot" style={{ background: i < dots ? (dots === 3 ? "var(--amber)" : "var(--teal)") : "#e7e0cc" }} />)}</div>
                 </div>
                 <h3 className="display text-lg font-bold mb-2" style={{ color: "var(--navy)" }}>{s.title}</h3>
                 <p className="text-xs leading-snug" style={{ color: "rgba(11,31,58,0.55)" }}>{s.goal.slice(0, 100)}...</p>
