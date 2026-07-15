@@ -159,8 +159,4 @@ export const SCENARIOS: Scenario[] = [
     opening: "I've already told the board we're launching on the 15th. Please tell me we're still on track.",
     modelResponse: "I understand the 15th is committed and I want to be transparent before it becomes a surprise. Our third-party component has a confirmed shipping delay. Here's what I've already done: I've secured expedited shipping that gets us to the 22nd with high confidence, and I've identified workstreams we can pull forward so we lose zero productive days. Can I walk you through the adjusted plan?",
   },
-];
-
-export function getScenario(id: string): Scenario | undefined {
-  return SCENARIOS.find((s) => s.id === id);
-}
+  // ── SALES ────────────────────────────────�
