@@ -293,10 +293,10 @@ function MethodScreen({ onEnter }: { onEnter: () => void }) {
           </div>
           <div className="leading-tight">
             <div className="display font-bold text-base" style={{ color: "var(--navy)" }}>GrowthAspire</div>
-            <div className="text-xs" style={{ color: "rgba(11,31,58,0.6)" }}>The Dojo Series</div>
+            <div className="text-xs" style={{ color: "rgba(11,31,58,0.6)" }}>The Practice Lab</div>
           </div>
         </div>
-        <div className="seal pill">Vol. 01 · Aikido</div>
+        <div className="seal pill">Vol. 01 · Influence</div>
       </nav>
       <header className="max-w-5xl mx-auto px-6 pt-12 pb-16 text-center">
         <div className="text-xs tracking-[0.3em] font-semibold mb-6" style={{ color: "rgba(11,31,58,0.5)" }}>A LIVE PRACTICE EXPERIENCE</div>
@@ -308,7 +308,7 @@ function MethodScreen({ onEnter }: { onEnter: () => void }) {
           High-stakes conversations require the opposite skill.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-          <button onClick={onEnter} className="btn-primary px-8 py-4 rounded-full font-semibold text-sm tracking-wide">Enter the Dojo →</button>
+          <button onClick={onEnter} className="btn-primary px-8 py-4 rounded-full font-semibold text-sm tracking-wide">Enter the Practice Lab →</button>
           <button onClick={() => document.getElementById("method")?.scrollIntoView({ behavior: "smooth" })} className="btn-outline px-8 py-4 rounded-full font-semibold text-sm tracking-wide">Learn the Method</button>
         </div>
       </header>
@@ -366,7 +366,7 @@ function ScenarioScreen({ onBack, onPick, filter, setFilter }: {
     <section className="min-h-screen">
       <nav className="max-w-6xl mx-auto px-6 pt-8 pb-4 flex items-center justify-between">
         <button onClick={onBack} className="text-sm" style={{ color: "rgba(11,31,58,0.6)" }}>← Back</button>
-        <div className="seal pill">Pick your drill</div>
+        <div className="seal pill">Pick your practice</div>
       </nav>
       <div className="max-w-5xl mx-auto px-6 py-12">
         <div className="text-center mb-10">

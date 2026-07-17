@@ -78,7 +78,7 @@ export default function EarlyAccessPage() {
           </div>
           <div className="leading-tight">
             <div className="display font-bold text-base" style={{ color: "var(--navy)" }}>GrowthAspire</div>
-            <div className="text-xs" style={{ color: "rgba(11,31,58,0.6)" }}>The Dojo Series</div>
+            <div className="text-xs" style={{ color: "rgba(11,31,58,0.6)" }}>The Practice Lab</div>
           </div>
         </div>
         {stats && stats.total > 0 && (
@@ -133,7 +133,7 @@ export default function EarlyAccessPage() {
       {/* Existing scenarios preview */}
       <section className="max-w-5xl mx-auto px-6 py-16">
         <div className="text-center mb-10">
-          <h2 className="display text-3xl font-bold mb-3" style={{ color: "var(--navy)" }}>Scenarios already in the dojo</h2>
+          <h2 className="display text-3xl font-bold mb-3" style={{ color: "var(--navy)" }}>Scenarios already in the lab</h2>
           <p style={{ color: "rgba(11,31,58,0.6)" }}>Curated by GrowthAspire coaches from 90+ enterprise engagements. We are adding more every week based on what YOU submit.
             .</p>
         </div>
@@ -281,7 +281,7 @@ export default function EarlyAccessPage() {
       )}
 
       <footer className="text-center pb-10 pt-6 text-xs" style={{ color: "rgba(11,31,58,0.4)" }}>
-        Built by GrowthAspire · Conversation Aikido Dojo
+        Built by GrowthAspire · Conversation Practice Lab
       </footer>
     </div>
   );

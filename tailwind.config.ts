@@ -10,7 +10,7 @@ const config: Config = {
         cream: "#fdfaf3",
       },
       fontFamily: {
-        display: ["Fraunces", "Georgia", "serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
         sans: ["Inter Tight", "system-ui", "sans-serif"],
       },
     },

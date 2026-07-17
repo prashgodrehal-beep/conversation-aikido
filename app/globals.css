@@ -28,10 +28,8 @@
 
 @layer components {
   .display {
-    font-family: "Fraunces", Georgia, serif;
-    font-optical-sizing: auto;
+    font-family: "Playfair Display", Georgia, serif;
     letter-spacing: -0.02em;
-    font-variation-settings: "WONK" 0;
   }
 
   .paper-bg {
@@ -141,7 +139,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Fraunces", serif;
+    font-family: "Playfair Display", serif;
     font-size: 24px;
     font-weight: 700;
   }
