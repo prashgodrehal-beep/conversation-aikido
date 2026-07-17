@@ -33,7 +33,7 @@ export default function EarlyAccessPage() {
     fetch("/api/submit-scenario?stats=true")
       .then((r) => r.json())
       .then(setStats)
-      .catch(() => {});
+      .catch(() => { });
   }, [submitted]);
 
   const handleSubmit = async () => {
@@ -57,7 +57,7 @@ export default function EarlyAccessPage() {
 
       if (!res.ok) throw new Error("Submission failed");
       setSubmitted(true);
-    } catch {
+    } catch (_) {
       setError("Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
@@ -228,8 +228,8 @@ export default function EarlyAccessPage() {
                     What the other person says
                   </label>
                   <textarea className="field" rows={2} style={{ minHeight: "60px" }}
-                    placeholder='The opening line you need to respond to. e.g., "I know you were hoping for the promotion. But honestly, the timing just wasn\'t right."'
-                    value={counterpartSays} onChange={(e) => setCounterpartSays(e.target.value)} />
+                    placeholder='The opening line you need to respond to. e.g., "I know you were hoping for the promotion. But honestly, the timing just wasn\' t right."'
+                  value={counterpartSays} onChange={(e) => setCounterpartSays(e.target.value)} />
                 </div>
                 <div>
                   <label className="text-xs font-semibold mb-1.5 block" style={{ color: "rgba(11,31,58,0.6)" }}>
