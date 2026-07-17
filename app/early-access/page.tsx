@@ -94,10 +94,10 @@ export default function EarlyAccessPage() {
           Early Access · Launching Soon
         </div>
         <h1 className="display text-4xl md:text-6xl font-bold mb-6 leading-[0.95]" style={{ color: "var(--navy)" }}>
-          Practice your hardest<br />conversations <span className="italic" style={{ color: "var(--teal)" }}>before</span> they happen.
+          Communication mastery comes from practicing your hardest<br />conversations <span className="italic" style={{ color: "var(--teal)" }}>before</span> they happen.
         </h1>
         <p className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8" style={{ color: "rgba(11,31,58,0.7)" }}>
-          An AI-powered roleplay dojo where you practice high-stakes conversations — sales objections, tough feedback, client conflicts — and get instant coaching on how to handle them better.
+          A roleplay-based coaching experience built on methods used by top negotiators, persuaders and sales & business leaders. Practice real conversations. Get scored by an expert-trained coach. Walk into your next meeting ready.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button onClick={scrollToForm} className="btn-primary px-8 py-4 rounded-full font-semibold text-sm tracking-wide">
@@ -118,8 +118,8 @@ export default function EarlyAccessPage() {
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { n: "01", title: "Pick a scenario", desc: "Choose a real conversation you struggle with — a price objection, a tough 1:1, a frustrated client." },
-            { n: "02", title: "Respond with voice or text", desc: "The AI plays the counterpart and pushes back like a real human. You practice your response out loud." },
-            { n: "03", title: "Get instant coaching", desc: "Scored on 4 dimensions: empathy, boundaries, tone, and strategy. Specific feedback on what to say differently." },
+            { n: "02", title: "Respond with voice or text", desc: "A trained counterpart pushes back like a real person would. You practice your actual response out loud." },
+            { n: "03", title: "Get instant coaching", desc: "Scored on 4 core dimensions of hard conversation: empathy, boundaries, tone, and strategy. Specific feedback on what to say differently." },
           ].map((s) => (
             <div key={s.n} className="bg-white rounded-2xl p-7" style={{ border: "1px solid rgba(11,31,58,0.08)" }}>
               <div className="display text-4xl font-bold mb-4" style={{ color: "rgba(11,31,58,0.08)" }}>{s.n}</div>
@@ -134,7 +134,8 @@ export default function EarlyAccessPage() {
       <section className="max-w-5xl mx-auto px-6 py-16">
         <div className="text-center mb-10">
           <h2 className="display text-3xl font-bold mb-3" style={{ color: "var(--navy)" }}>Scenarios already in the dojo</h2>
-          <p style={{ color: "rgba(11,31,58,0.6)" }}>These are live and playable. We&apos;re adding more every week based on what YOU submit.</p>
+          <p style={{ color: "rgba(11,31,58,0.6)" }}>Curated by GrowthAspire coaches from 90+ enterprise engagements. We are adding more every week based on what YOU submit.
+            .</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {PREVIEW_SCENARIOS.map((s) => (
@@ -176,10 +177,10 @@ export default function EarlyAccessPage() {
             <>
               <div className="text-center mb-8">
                 <h2 className="display text-3xl font-bold mb-3" style={{ color: "var(--navy)" }}>
-                  Get early access + shape the dojo
+                  Join the early access list
                 </h2>
                 <p style={{ color: "rgba(11,31,58,0.6)" }}>
-                  Enter your email for early bird access. Optionally, submit a scenario you&apos;d love to practice — the best ones get built into the dojo.
+                  We are opening the dojo to a small group first. Enter your email to get in. Even better — tell us the conversation you would love to practice, and we will build it for you.
                 </p>
               </div>
 
