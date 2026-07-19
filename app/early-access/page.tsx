@@ -33,7 +33,7 @@ export default function EarlyAccessPage() {
     fetch("/api/submit-scenario?stats=true")
       .then((r) => r.json())
       .then(setStats)
-      .catch(function () {});
+      .catch(function () { });
   }, [step]);
 
   const toggleGoal = (goalId: GoalId) => {
@@ -206,10 +206,10 @@ export default function EarlyAccessPage() {
           Early Access · Launching Soon
         </div>
         <h1 className="display text-4xl md:text-6xl font-bold mb-6 leading-[0.95]" style={{ color: "var(--navy)" }}>
-          Practice your hardest<br />conversations <span className="italic" style={{ color: "var(--teal)" }}>before</span> they happen.
+          Communication mastery comes from practicing your hardest<br />conversations <span className="italic" style={{ color: "var(--teal)" }}>before</span> they happen.
         </h1>
         <p className="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8" style={{ color: "rgba(11,31,58,0.7)" }}>
-          A roleplay-based coaching experience built on methods used by FBI negotiators and top sales leaders. Practice real conversations. Get scored by an expert-trained coach. Walk into your next meeting ready.
+          A roleplay-based coaching experience built on methods used by top negotiators, persuaders and sales & business leaders. Practice real conversations. Get scored by an expert-trained coach. Walk into your next meeting ready.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button onClick={scrollToForm} className="btn-primary px-8 py-4 rounded-full font-semibold text-sm tracking-wide">
